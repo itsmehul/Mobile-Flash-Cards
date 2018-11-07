@@ -8,7 +8,6 @@ import { fetchDecks } from '../utils/api'
 import { AppLoading} from 'expo'
 import Deck from "./Deck";
 
-
 class DeckList extends Component {
   state = {
     ready: false
@@ -37,7 +36,7 @@ class DeckList extends Component {
     return (
       <View>
         <Text>DeckList View</Text>
-        {Object.values(decks).map(deck=><Deck key={Math.random()*10} deckData={deck}/>)}
+        {Object.values(decks).map(deck=><Deck navigation={this.props.navigation} key={Math.random()*10} deckData={deck}/>)}
       </View>
     );
   }
