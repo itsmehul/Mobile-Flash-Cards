@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {View, Text, TextInput} from 'react-native'
 import TextButton from './TextButton';
+import { connect } from 'react-redux'
 
 class AddDeck extends Component {
     state = {
@@ -9,6 +10,7 @@ class AddDeck extends Component {
 
     addDeck = () => {
         alert('Qs Added')
+        //SAVE TO DB
     }
 
     render() {

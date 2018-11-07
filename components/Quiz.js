@@ -30,10 +30,10 @@ class Quiz extends Component {
           <Text>TouchableHighlight</Text>
           <View>
             <TouchableOpacity style={{backgroundColor:'black'}} onPress={() => this.props.giveAnswer("wrong")}>
-              <Text style={{color: 'white'}}>Incorrect</Text>
+              <Text style={{color: 'white'}}>Forgot</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{backgroundColor:'black'}} onPress={() => this.props.giveAnswer("right")}>
-              <Text style={{color: 'white'}}>Correct</Text>
+              <Text style={{color: 'white'}}>Remembered</Text>
             </TouchableOpacity>
           </View>
         </View>

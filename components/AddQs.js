@@ -10,6 +10,7 @@ class AddQs extends Component {
 
     addQs = () => {
         alert('Qs Added')
+        //SAVE TO DB
     }
 
     render() {
