@@ -6,8 +6,8 @@ import { recieveDecks } from "../actions";
 //******************** */
 import { fetchDecks } from '../utils/api'
 import { AppLoading} from 'expo'
-
 import Deck from "./Deck";
+
 
 class DeckList extends Component {
   state = {
