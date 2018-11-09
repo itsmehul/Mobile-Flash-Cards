@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import Deck from "./components/Deck";
 import AddQs from "./components/AddQs";
 import AddDeck from "./components/AddDeck";
 import QuizList from "./components/QuizList";
+import Deck from "./components/Deck"
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
@@ -13,7 +13,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { createStackNavigator } from "react-navigation";
 import { Constants } from 'expo'
 
-//Component to leave required space to accomodate for status bar
+//.Component to leave required space to accomodate for status bar
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -42,7 +42,7 @@ const Tabs = createMaterialBottomTabNavigator(
           <Icon name="ios-add" size={24} color={tintColor} />
         )
       }
-    }
+    },
   },
   {
     initialRouteName: "DeckList",
@@ -55,20 +55,31 @@ const Tabs = createMaterialBottomTabNavigator(
 const MainNavigator = createStackNavigator(
   {
     Home: {
-      screen: Tabs
+      screen: Tabs,
+      navigationOptions:{
+        header: null
+      }
     },
     AddQs: {
       screen: AddQs
     },
     QuizList: {
       screen: QuizList
+    },
+    Deck:{
+      screen: Deck,
     }
   },
   {
-    headerMode: "none",
-    mode: "modal",
+    headerMode: "float",
+    mode: "card",
     navigationOptions: {
-      gesturesEnabled: false
+      gesturesEnabled: false,
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'blue',
+        paddingBottom:20
+      },
     },
   }
 );

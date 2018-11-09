@@ -2,6 +2,7 @@ export const RECIEVE_DECKS = 'RECIEVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const ADD_QS = 'ADD_QS'
 export const SUBMIT_ANS = 'SUBMIT_ANS'
+export const DELETE_DECK = 'DELETE_DECK'
 
 export function recieveDecks (decks) {
     return{
@@ -10,10 +11,11 @@ export function recieveDecks (decks) {
     }
 }
 
-export function addDeck (deck) {
+export function addDeck (deck,key) {
     return{
         type: ADD_DECK,
         deck,
+        key,
     }
 }
 
@@ -28,6 +30,13 @@ export function submitAns (ans) {
     return{
         type: SUBMIT_ANS,
         ans
+    }
+}
+
+export function deleteDeck (key) {
+    return{
+        type: DELETE_DECK,
+        key
     }
 }
 

@@ -20,69 +20,42 @@ class Quiz extends Component {
   };
 
   render() {
-    if(this.state.showAns===true){
+    if (this.state.showAns === true) {
+      return (
+        <TouchableHighlight
+          onPress={() => this.toggleShowAns()}
+          underlayColor="white"
+        >
+          <View>
+            <Text>TouchableHighlight</Text>
+            <View>
+              <TouchableOpacity
+                style={{ backgroundColor: "black" }}
+                onPress={() => this.props.giveAnswer("wrong")}
+              >
+                <Text style={{ color: "white" }}>Forgot</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{ backgroundColor: "black" }}
+                onPress={() => this.props.giveAnswer("right")}
+              >
+                <Text style={{ color: "white" }}>Remembered</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableHighlight>
+      );
+    }
     return (
       <TouchableHighlight
-        onPress={()=>this.toggleShowAns()}
+        onPress={() => this.toggleShowAns()}
         underlayColor="white"
       >
         <View>
-          <Text>TouchableHighlight</Text>
-          <View>
-            <TouchableOpacity style={{backgroundColor:'black'}} onPress={() => this.props.giveAnswer("wrong")}>
-              <Text style={{color: 'white'}}>Forgot</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{backgroundColor:'black'}} onPress={() => this.props.giveAnswer("right")}>
-              <Text style={{color: 'white'}}>Remembered</Text>
-            </TouchableOpacity>
-          </View>
+          <Text>Question</Text>
         </View>
       </TouchableHighlight>
-    );}
-    return(
-        <TouchableHighlight
-        onPress={()=>this.toggleShowAns()}
-        underlayColor="white"
-      >
-    <View>
-        <Text>Question</Text>
-    </View>
-    </TouchableHighlight>
-    )
-    // {
-    //   this.state.showAns === false && (
-    //     <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
-    //       <View style={styles.button}>
-    //         <Text style={styles.buttonText}>TouchableHighlight</Text>
-    //         <TouchableOpacity
-    //           style={
-    //             Platform.OS === "ios"
-    //               ? styles.iosSubmitBtn
-    //               : styles.AndroidSubmitBtn
-    //           }
-    //           onPress={this.props.giveAnswer("wrong")}
-    //         >
-    //           <Text style={styles.submitBtnText}>Incorrect</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity
-    //           style={
-    //             Platform.OS === "ios"
-    //               ? styles.iosSubmitBtn
-    //               : styles.AndroidSubmitBtn
-    //           }
-    //           onPress={this.props.giveAnswer("right")}
-    //         >
-    //           <Text style={styles.submitBtnText}>Knew it!</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     </TouchableHighlight>
-    //   );
-    // }
-    // {this.state.showAns===true&&(
-    //   <View style={styles.button}>
-    //     <Text style={styles.buttonText}>Answer</Text>
-    //   </View>
-    // );}
+    );
   }
 }
 
