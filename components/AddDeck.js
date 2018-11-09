@@ -14,15 +14,14 @@ class AddDeck extends Component {
   addDeckHandler = () => {
     const { goBack, add} = this.props;
     const { decks } = this.props;
-    console.log(decks)
-    const dkey = parseInt(Object.keys(decks).pop())+1
+    const lastItemNumber = parseInt(Object.keys(decks).pop())
+    const dkey = isNaN(lastItemNumber)?1:lastItemNumber+1
 
     deck = {
       quizlist: {},
       name: this.state.deckName
     };
 
-    // console.log(deck)
     add(deck, dkey)
 
     addDeckToStorage(deck, dkey)

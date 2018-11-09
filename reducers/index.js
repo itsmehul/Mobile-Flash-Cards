@@ -14,7 +14,6 @@ function decks(state = {}, action) {
         ...action.decks
       };
     case ADD_DECK:
-    console.log(action.deck)
       return {
         ...state,
         [action.key]:action.deck

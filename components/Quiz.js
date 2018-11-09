@@ -9,37 +9,36 @@ import {
   Platform
 } from "react-native";
 import { purple, white } from "../utils/colors";
+import TextButton from "./TextButton";
+import { connect } from "react-redux";
+import { addDeck } from "../actions";
 
 class Quiz extends Component {
-  state = {
-    showAns: false
-  };
-
-  toggleShowAns = () => {
-    this.setState({ showAns: !this.state.showAns });
-  };
-
   render() {
-    if (this.state.showAns === false) {
+    const { ans, correct, incorrect, qs } = this.props.state[
+      this.props.dkey
+    ].quizlist[this.props.qid];
+
+    if (this.props.showAns === true) {
       return (
         <TouchableHighlight
           onPress={() => this.toggleShowAns()}
           underlayColor="white"
         >
           <View>
-            <Text>TouchableHighlight</Text>
+            <Text>{ans}</Text>
             <View>
               <TouchableOpacity
                 style={{ backgroundColor: "black" }}
-                onPress={() => this.props.giveAnswer("wrong")}
+                onPress={() => this.props.nextQs("incorrect")}
               >
-                <Text style={{ color: "white" }}>Forgot</Text>
+                <Text style={{ color: "white" }}>Incorrect</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ backgroundColor: "black" }}
-                onPress={() => this.props.giveAnswer("right")}
+                onPress={() => this.props.nextQs("correct")}
               >
-                <Text style={{ color: "white" }}>Remembered</Text>
+                <Text style={{ color: "white" }}>Correct</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -47,12 +46,28 @@ class Quiz extends Component {
       );
     }
     return (
-
+      <View>
         <View>
-          <Text>Answer</Text>
+          <Text>{qs}</Text>
         </View>
+        <TextButton onPress={() => this.props.toggleShowAns()}>
+          Show Answer
+        </TextButton>
+      </View>
     );
   }
 }
-
-export default Quiz;
+function mapStateToProps(state) {
+  return {
+    state
+  };
+}
+function mapDispatchToProps(dispatch, { navigation }) {
+  return {
+    goBack: () => navigation.goBack()
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Quiz);

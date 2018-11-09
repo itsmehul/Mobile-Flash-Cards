@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableHighlight, } from "react-native";
-//Imports for redux
 import { connect } from "react-redux";
 import { recieveDecks } from "../actions";
-//******************** */
 import { fetchDecks } from "../utils/api";
 import { AppLoading } from "expo";
 
@@ -33,19 +31,7 @@ class DeckList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-
-    //Call fetchDecks from our Storage api
-    fetchDecks()
-      //Call action creator to inform our Redux store
-      .then(decks => {
-        //Make sure we parse the json objec
-        dispatch(recieveDecks(JSON.parse(decks)));
-      })
-      .then(() => this.setState(() => ({ ready: true })));
-  }
-
-  // shouldComponentUpdate(nextprops){
-  //   return false}
+    fetchDecks() .then(decks => { dispatch(recieveDecks(JSON.parse(decks))); }) .then(() => this.setState(() => ({ ready: true }))); }
 
   render() {
     const { decks } = this.props;
@@ -69,7 +55,7 @@ class DeckList extends Component {
     );
   }
 }
-//Get data from redux
+
 function mapStateToProps(decks) {
   return {
     decks

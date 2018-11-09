@@ -7,14 +7,14 @@ function setDummyData () {
       1:{
         quizlist: {
             1:{
-              remembered: 2,
-              forgotten: 3,
+              correct: 2,
+              incorrect: 3,
               qs: "ABC1",
               ans: "XYZ1"
             },
             2:{
-              remembered: 2,
-              forgotten: 3,
+              correct: 2,
+              incorrect: 3,
               qs: "ABC2",
               ans: "XYZ2"
             }
@@ -24,14 +24,14 @@ function setDummyData () {
       2:{
         quizlist: {
             1:{
-              remembered: 2,
-              forgotten: 3,
+              correct: 2,
+              incorrect: 3,
               qs: "LMN1",
               ans: "XYZ1"
             },
             2:{
-              remembered: 2,
-              forgotten: 3,
+              correct: 2,
+              incorrect: 3,
               qs: "LMN2",
               ans: "XYZ2"
             }

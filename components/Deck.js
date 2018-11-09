@@ -42,7 +42,7 @@ class Deck extends Component {
         >
           {deckData.name}
         </Text>
-        <TextButton onPress={() => navigation.navigate("QuizList")}>
+        <TextButton onPress={() => navigation.navigate("QuizList",{dkey})}>
           Start Quiz
         </TextButton>
         <TextButton
@@ -60,7 +60,6 @@ class Deck extends Component {
 
 function mapStateToProps(state, { navigation }) {
   const { dkey } = navigation.state.params;
-
   return {
     dkey,
     deckData: state[dkey],

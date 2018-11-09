@@ -13,20 +13,21 @@ class AddQs extends Component {
 
   addQs = () => {
     const { deckData, dkey, goBack, add } = this.props;
-    const qkey = parseInt(Object.keys(deckData.quizlist).pop()) + 1;
+    const lastItemNumber = parseInt(Object.keys(deckData.quizlist).pop())
+    const qkey = isNaN(lastItemNumber)?1:lastItemNumber+1
+    
     deck = {
       quizlist: {
         ...deckData.quizlist,
         [qkey]: {
-          remembered: 0,
-          forgotten: 0,
+          correct: 0,
+          incorrect: 0,
           qs: this.state.qs,
           ans: this.state.ans
         }
       },
       name: deckData.name
     };
-    console.log(deck);
 
     add(deck, dkey);
     addDeckToStorage(deck, dkey)
@@ -62,8 +63,6 @@ class AddQs extends Component {
 
 function mapStateToProps(state, { navigation }) {
   const { dkey } = navigation.state.params;
-  console.log(dkey);
-
   return {
     dkey,
     state,
