@@ -24,7 +24,7 @@ class AddQs extends Component {
           ans: this.state.ans
         }
       },
-      name: this.state.deckName
+      name: deckData.name
     };
     console.log(deck);
 

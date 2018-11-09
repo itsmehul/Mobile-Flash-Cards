@@ -20,7 +20,7 @@ class Quiz extends Component {
   };
 
   render() {
-    if (this.state.showAns === true) {
+    if (this.state.showAns === false) {
       return (
         <TouchableHighlight
           onPress={() => this.toggleShowAns()}
@@ -47,14 +47,10 @@ class Quiz extends Component {
       );
     }
     return (
-      <TouchableHighlight
-        onPress={() => this.toggleShowAns()}
-        underlayColor="white"
-      >
+
         <View>
-          <Text>Question</Text>
+          <Text>Answer</Text>
         </View>
-      </TouchableHighlight>
     );
   }
 }
