@@ -22,7 +22,9 @@ class Deck extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    if(Object.keys(nextProps.state[this.props.dkey].quizlist).length){return true}
+    if(typeof(nextProps.state[this.props.dkey])!="undefined"){
+    if(Object.keys(nextProps.state[this.props.dkey].quizlist).length&&typeof(nextProps.deckData)!="undefined"){return true}
+  }
     
     return false;
   }
