@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text,  Alert, } from "react-native";
+import { View, Text,  StyleSheet, } from "react-native";
 import Quiz from "./Quiz";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
@@ -17,10 +17,6 @@ class QuizList extends Component {
     showAns: false,
     showCompleteView:false,
   };
-
-  componentDidMount(){
-      //set total max value
-  }
 
   toggleShowAns = () => {
     this.setState({ showAns: !this.state.showAns });
@@ -60,9 +56,6 @@ class QuizList extends Component {
 
     add(deck, dkey);
     addDeckToStorage(deck, dkey)
-      .then(d => {
-        //Make sure we parse the json objec
-      })
       .then(() => this.setState(() => ({ ready: true })));
     
     const nextqid = this.state.qid+1
@@ -80,26 +73,47 @@ class QuizList extends Component {
   render() {
     if(this.props.quizlength!=0){
     return (
-      <View>
-        <Text>{this.state.remaining}</Text>
+      <View style={styles.container}>
+        <Text style={{fontSize:17}}>{this.state.remaining!=0?`Remaining questions: ${this.state.remaining}`:'Completed'}</Text>
 
         {this.state.showCompleteView===false&&(
         <Quiz showAns={this.state.showAns} toggleShowAns={this.toggleShowAns} nextQs={this.nextQs} qid={this.state.qid} dkey={this.props.dkey}/>)}
         {this.state.showCompleteView===true&&(
-          <View>
-            <Text>Completed</Text>
-        <Text>{`Your score is: ${(this.state.score*100)/this.state.total}%`}</Text>
+          <View style={[styles.card,{backgroundColor:'#f0f0f5'}]}>
+        <Text style={{fontSize:40, fontWeight:'bold'}}>{`Your score is: ${((this.state.score*100)/this.state.total).toFixed(2)}%`}</Text>
             <TextButton onPress={this.reset}>Reset</TextButton>
           </View>
         )}
       </View>
     );}else{
       return(
-        <Text>There are no cards on the deck</Text>
+        <View style={styles.container}><Text style={{fontSize:20}}>There are no cards on the deck</Text></View>
       )
     }
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ecf2f9",
+    alignItems:"center"
+  },
+  card: {
+    margin: 10,
+    padding: 20,
+    backgroundColor: "#ccd9ff",
+  },
+  cardText: {
+    fontSize: 50,
+    color: "#33334d"
+  },
+  quizLengthText:{
+    fontSize: 28, marginRight: 10, alignSelf: "flex-start"
+  }
+});
+
 function mapStateToProps(state, { navigation }) {
   const { dkey } = navigation.state.params;
   return {

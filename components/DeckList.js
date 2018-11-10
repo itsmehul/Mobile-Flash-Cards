@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
+import { View, Text, TouchableHighlight, StyleSheet, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { recieveDecks } from "../actions";
 import { fetchDecks } from "../utils/api";
@@ -22,7 +22,7 @@ function DeckCards({ navigation, deckData }) {
       <View style={styles.row}>
         <Text style={styles.cardText}>{deckData[1].name}</Text>
         <Text
-          style={{ fontSize: 28, marginRight: 10, alignSelf: "flex-start" }}
+          style={styles.quizLengthText}
         >
           {length}
         </Text>
@@ -53,7 +53,7 @@ class DeckList extends Component {
       return <AppLoading />;
     }
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {Object.entries(decks).map(d => {
           return (
             <DeckCards
@@ -63,7 +63,7 @@ class DeckList extends Component {
             />
           );
         })}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#6699cc"
+    backgroundColor: "#ecf2f9"
   },
   row: {
     flexDirection: "row",
@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20,
     backgroundColor: "#ccd9ff",
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: "black",
-    shadowOpacity: 1.0
   },
   cardText: {
     fontSize: 50,
     color: "#33334d"
+  },
+  quizLengthText:{
+    fontSize: 28, marginRight: 10, alignSelf: "flex-start"
   }
 });
 

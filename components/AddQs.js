@@ -1,14 +1,22 @@
 import React, { Component } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import TextButton from "./TextButton";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
 import { addDeckToStorage } from "../utils/api";
+import MyTextInput from "./MyTextInput";
 
 class AddQs extends Component {
+
   state = {
     qs: "",
     ans: ""
+  };
+
+  static navigationOptions = () => {
+    return {
+      title: `Create Quiz Card`
+    };
   };
 
   addQs = () => {
@@ -40,26 +48,53 @@ class AddQs extends Component {
 
   render() {
     return (
-      <View>
-        <Text>AddQs View</Text>
-        <TextInput
-          style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+      <View style={styles.container}>
+        <MyTextInput
+          style={{marginBottom:20}}
           onChangeText={qs => this.setState({ qs })}
           value={this.state.qs}
-          placeholder={"Why did the chicken cross the road?"}
+          placeholder={"Question"}
         />
-        <TextInput
-          style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+        <MyTextInput
           onChangeText={ans => this.setState({ ans })}
           value={this.state.ans}
-          placeholder={"To get to the other side"}
+          placeholder={"Answer"}
         />
 
-        <TextButton onPress={() => this.addQs()}>Add Question</TextButton>
+        <TextButton onPress={() => this.addQs()}>Add</TextButton>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f2f2f2",
+    alignContent: "center",
+    justifyContent: "flex-start"
+  },
+  row: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  card: {
+    height: 100,
+    margin: 10,
+    padding: 20,
+    backgroundColor: "#ccd9ff",
+    shadowOffset: { width: 10, height: 10 },
+    shadowColor: "black",
+    shadowOpacity: 1.0
+  },
+  cardText: {
+    fontSize: 50,
+    color: "#33334d"
+  }
+});
 
 function mapStateToProps(state, { navigation }) {
   const { dkey } = navigation.state.params;

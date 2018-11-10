@@ -1,7 +1,6 @@
 import React from "react";
 import {
   StyleSheet,
-  AsyncStorage,
   View,
   StatusBar,
   Easing,
@@ -20,8 +19,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { createStackNavigator } from "react-navigation";
 import { Constants } from "expo";
 import { setLocalNotification } from "./utils/helpers";
-
-const NOTIFICATION_KEY = "FlashCards:notfication";
 
 //.Component to leave required space to accomodate for status bar
 function MyStatusBar({ backgroundColor, ...props }) {
@@ -50,7 +47,8 @@ const Tabs = createMaterialBottomTabNavigator(
         tabBarLabel: "Add Deck",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="ios-add" size={24} color={tintColor} />
-        )
+        ),
+        tabBarColor:'black'
       }
     }
   },
@@ -86,11 +84,12 @@ const MainNavigator = createStackNavigator(
   {
     headerMode: "float",
     mode: "card",
+    headerLayoutPreset:'center',
     navigationOptions: {
       gesturesEnabled: false,
       headerTintColor: "white",
       headerStyle: {
-        backgroundColor: "blue",
+        backgroundColor: "#33334d",
         paddingBottom: 20
       }
     },
@@ -141,6 +140,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6699cc"
+    backgroundColor: "#ecf2f9"
   }
 });
