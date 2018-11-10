@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import TextButton from "./TextButton";
 import { connect } from "react-redux";
 import { deleteDeck } from "../actions";
-import { removeDeckFromStorage, addDeckToStorage } from "../utils/api";
+import { removeDeckFromStorage } from "../utils/api";
 
 class Deck extends Component {
   state = {};
@@ -13,11 +13,7 @@ class Deck extends Component {
       title: navigation.state.params.deckName
     };
   };
-
-
-
-  startQuiz = () => {};
-
+  
   deleteDeck = () => {
     const { remove, goBack, dkey } = this.props;
     remove();
@@ -33,23 +29,16 @@ class Deck extends Component {
     const { navigation, deckData, dkey } = this.props;
     return (
       <View>
-        <Text
-          style={{
-            marginBottom: 20,
-            alignSelf: "flex-start",
-            justifyContent: "flex-start"
-          }}
-        >
+        <Text style={{ marginBottom: 20, alignSelf: "flex-start", justifyContent: "flex-start" }} >
           {deckData.name}
+        </Text>
+        <Text style={{ marginBottom: 20, alignSelf: "flex-start", justifyContent: "flex-start" }} >
+          {Object.keys(deckData.quizlist).length}
         </Text>
         <TextButton onPress={() => navigation.navigate("QuizList",{dkey})}>
           Start Quiz
         </TextButton>
-        <TextButton
-          onPress={() => {
-            navigation.navigate("AddQs",{dkey});
-          }}
-        >
+        <TextButton onPress={() => { navigation.navigate("AddQs",{dkey}); }} >
           Add Question
         </TextButton>
         <TextButton onPress={this.deleteDeck}>Delete Deck</TextButton>

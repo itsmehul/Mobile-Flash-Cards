@@ -4,21 +4,16 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
-  StyleSheet,
-  Alert,
-  Platform
 } from "react-native";
-import { purple, white } from "../utils/colors";
 import TextButton from "./TextButton";
 import { connect } from "react-redux";
-import { addDeck } from "../actions";
 
 class Quiz extends Component {
-  render() {
-    const { ans, correct, incorrect, qs } = this.props.state[
-      this.props.dkey
-    ].quizlist[this.props.qid];
 
+  render() {
+    const { ans, qs } = this.props.state[this.props.dkey].quizlist[
+      this.props.qid
+    ];
     if (this.props.showAns === true) {
       return (
         <TouchableHighlight
@@ -50,7 +45,11 @@ class Quiz extends Component {
         <View>
           <Text>{qs}</Text>
         </View>
-        <TextButton onPress={() => this.props.toggleShowAns()}>
+        <TextButton
+          onPress={() => {
+            this.props.toggleShowAns();
+          }}
+        >
           Show Answer
         </TextButton>
       </View>

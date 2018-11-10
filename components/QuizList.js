@@ -5,12 +5,14 @@ import { connect } from "react-redux";
 import { addDeck } from "../actions";
 import { addDeckToStorage } from "../utils/api";
 import TextButton from "./TextButton";
+import { clearLocalNotification, setLocalNotification } from "../utils/helpers";
 
 
 class QuizList extends Component {
   state = {
     score: 0,
     total: this.props.quizlength,
+    remaining:this.props.quizlength,
     qid:1,
     showAns: false,
     showCompleteView:false,
@@ -37,6 +39,10 @@ class QuizList extends Component {
     const { deckData, dkey, goBack, add } = this.props;
     const qkey = this.state.qid;
     const count = parseInt(deckData.quizlist[qkey][`${ans}`])
+
+    const newRemaining = this.state.remaining-1
+    this.setState({remaining:newRemaining})
+
     if(ans==="correct"){
       const newScore = this.state.score+1
       this.setState({score:newScore})
@@ -64,6 +70,8 @@ class QuizList extends Component {
       this.setState({qid:nextqid})
     }else{
       this.setState({showCompleteView:!this.state.showCompleteView})
+      clearLocalNotification()
+      .then(setLocalNotification)
     }
     this.setState({ showAns: !this.state.showAns });
 
@@ -73,13 +81,14 @@ class QuizList extends Component {
     if(this.props.quizlength!=0){
     return (
       <View>
-        <Text>{`${this.state.score}/${this.state.total}`}</Text>
+        <Text>{this.state.remaining}</Text>
 
         {this.state.showCompleteView===false&&(
         <Quiz showAns={this.state.showAns} toggleShowAns={this.toggleShowAns} nextQs={this.nextQs} qid={this.state.qid} dkey={this.props.dkey}/>)}
         {this.state.showCompleteView===true&&(
           <View>
             <Text>Completed</Text>
+        <Text>{`Your score is: ${(this.state.score*100)/this.state.total}%`}</Text>
             <TextButton onPress={this.reset}>Reset</TextButton>
           </View>
         )}

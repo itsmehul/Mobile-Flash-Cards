@@ -1,9 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  AsyncStorage,
+  View,
+  StatusBar,
+  Easing,
+  Animated
+} from "react-native";
 import AddQs from "./components/AddQs";
 import AddDeck from "./components/AddDeck";
 import QuizList from "./components/QuizList";
-import Deck from "./components/Deck"
+import Deck from "./components/Deck";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
@@ -11,15 +18,18 @@ import DeckList from "./components/DeckList";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 import { createStackNavigator } from "react-navigation";
-import { Constants } from 'expo'
+import { Constants } from "expo";
+import { setLocalNotification } from "./utils/helpers";
+
+const NOTIFICATION_KEY = "FlashCards:notfication";
 
 //.Component to leave required space to accomodate for status bar
-function MyStatusBar ({backgroundColor, ...props}) {
+function MyStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
-  )
+  );
 }
 
 //Tab navigator component
@@ -42,12 +52,15 @@ const Tabs = createMaterialBottomTabNavigator(
           <Icon name="ios-add" size={24} color={tintColor} />
         )
       }
-    },
+    }
   },
   {
     initialRouteName: "DeckList",
     activeTintColor: "white",
-    shifting: true
+    shifting: true,
+    barStyle: {
+      backgroundColor: "#33334d"
+    }
   }
 );
 
@@ -56,7 +69,7 @@ const MainNavigator = createStackNavigator(
   {
     Home: {
       screen: Tabs,
-      navigationOptions:{
+      navigationOptions: {
         header: null
       }
     },
@@ -66,8 +79,8 @@ const MainNavigator = createStackNavigator(
     QuizList: {
       screen: QuizList
     },
-    Deck:{
-      screen: Deck,
+    Deck: {
+      screen: Deck
     }
   },
   {
@@ -75,22 +88,49 @@ const MainNavigator = createStackNavigator(
     mode: "card",
     navigationOptions: {
       gesturesEnabled: false,
-      headerTintColor: 'white',
+      headerTintColor: "white",
       headerStyle: {
-        backgroundColor: 'blue',
-        paddingBottom:20
-      },
+        backgroundColor: "blue",
+        paddingBottom: 20
+      }
     },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(5)),
+        timing: Animated.timing
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const translateX = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0]
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1]
+        });
+
+        return { opacity, transform: [{ translateX }] };
+      }
+    })
   }
 );
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={styles.container}>
-        {/* Render the status bar along with the Main navigator */}
-        <MyStatusBar backgroundColor='blue' barStyle="light-content" />
+          <MyStatusBar backgroundColor="#33334d" barStyle="light-content" />
           <MainNavigator />
         </View>
       </Provider>
@@ -101,6 +141,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#6699cc"
   }
 });
